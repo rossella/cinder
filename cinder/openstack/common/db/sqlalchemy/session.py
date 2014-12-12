@@ -298,6 +298,11 @@ database_opts = [
                deprecated_group=DEFAULT,
                help='Maximum number of SQL connections to keep open in a '
                     'pool'),
+    cfg.IntOpt('pool_timeout',
+               deprecated_opts=[cfg.DeprecatedOpt('sqlalchemy_pool_timeout',
+                                                  group='DATABASE')],
+               help='If set, use this value for pool_timeout with '
+                    'SQLAlchemy.'),
     cfg.IntOpt('max_retries',
                default=10,
                deprecated_name='sql_max_retries',
@@ -578,6 +583,8 @@ def create_engine(sql_connection, sqlite_fk=False):
             engine_args["connect_args"] = {'check_same_thread': False}
     else:
         engine_args['pool_size'] = CONF.database.max_pool_size
+        if CONF.database.pool_timeout is not None:
+            engine_args['pool_timeout'] = CONF.database.pool_timeout
         if CONF.database.max_overflow is not None:
             engine_args['max_overflow'] = CONF.database.max_overflow
 

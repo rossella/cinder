@@ -1927,6 +1927,9 @@
 # Deprecated group/name - [DEFAULT]/sql_max_retries
 #max_retries=10
 
+# If set, use this value for pool_timeout with sqlalchemy
+# pool_timeout = 10
+
 # interval between retries of opening a sql connection
 # (integer value)
 # Deprecated group/name - [DEFAULT]/sql_retry_interval
